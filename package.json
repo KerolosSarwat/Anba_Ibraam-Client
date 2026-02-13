@@ -12,10 +12,13 @@
     },
     "scripts": {
         "dev": "vite --host",
-        "build": "vite dist",
+        "build": "vite build",
         "preview": "vite preview --host",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
         "lint:fix": "eslint . --ext js,jsx --fix"
+    },
+    "build": {
+        "outputDirectory": "dist"
     },
     "dependencies": {
         "lucide-react": "^0.344.0",
