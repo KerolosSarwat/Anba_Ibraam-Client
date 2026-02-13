@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         // target: 'http://localhost:3000',
-        target: 'https://anba-ibraam-server.vercel.app/',
+        target: 'https://anbaibraam-server-production.up.railway.app/',
         changeOrigin: true,
       }
     }
