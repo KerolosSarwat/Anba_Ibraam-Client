@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { buildApiUrl } from '../config/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,16 +15,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(buildApiUrl('api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
         login(data.user, data.token);
         navigate('/');
@@ -39,7 +40,7 @@ export default function Login() {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
       <div className="glass-card" style={{ width: '100%', maxWidth: '400px', padding: '2.5rem' }}>
         <h2 style={{ textAlign: 'center', marginTop: 0 }}>{t('loginTitle') || 'Login'}</h2>
-        
+
         {error && (
           <div style={{ padding: '0.75rem', background: '#fee2e2', color: '#b91c1c', borderRadius: '8px', marginBottom: '1rem', textAlign: 'center' }}>
             {error}
@@ -49,8 +50,8 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">{t('lblEmail') || 'Email'}</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               required
               className="form-input"
               value={email}
@@ -60,8 +61,8 @@ export default function Login() {
 
           <div className="form-group">
             <label className="form-label">{t('lblPassword') || 'Password'}</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               required
               className="form-input"
               value={password}

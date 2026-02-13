@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { calculateAge } from '../utils/nationalId';
 import { useLanguage } from '../contexts/LanguageContext';
+import { buildApiUrl } from '../config/api';
 
 export default function Reports() {
   const { t } = useLanguage();
