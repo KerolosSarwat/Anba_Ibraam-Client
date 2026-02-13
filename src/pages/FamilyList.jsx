@@ -3,6 +3,7 @@ import { Edit, Trash2, Plus, Search } from 'lucide-react';
 import { calculateAge } from '../utils/nationalId';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { API_URL } from '../config/api';
 
 export default function FamilyList() {
   const { t } = useLanguage();
@@ -11,7 +12,7 @@ export default function FamilyList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/families', {
+    fetch(`${API_URL}/api/families`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -43,7 +44,7 @@ export default function FamilyList() {
     if (!window.confirm(t('confirmDelete') || 'Are you sure?')) return;
 
     try {
-      const res = await fetch(`/api/families/${id}`, {
+      const res = await fetch(`${API_URL}/api/families/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

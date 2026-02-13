@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Save } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useParams, useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 export default function FamilyRegistration() {
   const { t } = useLanguage();
@@ -28,7 +29,7 @@ export default function FamilyRegistration() {
   useEffect(() => {
     if (isEditing) {
       setLoading(true);
-      fetch(`/api/families/${id}`, {
+      fetch(`${API_URL}/api/families/${id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -50,18 +51,18 @@ export default function FamilyRegistration() {
   const handleMemberCountChange = (e) => {
     const count = parseInt(e.target.value) || 0;
     setMemberCount(count);
-    
+
     // Resize members array while preserving existing data
     setFormData(prev => {
       const currentMembers = prev.members;
       let newMembers = [...currentMembers];
-      
+
       if (count > currentMembers.length) {
         // Add new members
         for (let i = currentMembers.length; i < count; i++) {
-          newMembers.push({ 
-            name: '', 
-            role: 'Other', 
+          newMembers.push({
+            name: '',
+            role: 'Other',
             clothingSize: '',
             nationalId: '',
             phone: '',
@@ -77,7 +78,7 @@ export default function FamilyRegistration() {
         // Truncate
         newMembers = newMembers.slice(0, count);
       }
-      
+
       return { ...prev, members: newMembers };
     });
   };
@@ -96,18 +97,18 @@ export default function FamilyRegistration() {
     e.preventDefault();
     setLoading(true);
     try {
-      const url = isEditing ? `/api/families/${id}` : '/api/families';
+      const url = isEditing ? `${API_URL}/api/families/${id}` : `${API_URL}/api/families`;
       const method = isEditing ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method,
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(formData)
       });
-      
+
       if (response.ok) {
         alert(t('alertSuccess'));
         if (isEditing) {
@@ -153,80 +154,80 @@ export default function FamilyRegistration() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
           <div className="form-group">
             <label className="form-label">{t('lblFullName')}</label>
-            <input 
+            <input
               required
               name="fullName"
               value={formData.fullName}
               onChange={handleFamilyChange}
-              className="form-input" 
-              placeholder={t('phFullName')} 
+              className="form-input"
+              placeholder={t('phFullName')}
             />
           </div>
           <div className="form-group">
             <label className="form-label">{t('lblNationalId')}</label>
-            <input 
+            <input
               required
               name="nationalId"
               value={formData.nationalId}
               onChange={handleFamilyChange}
               minLength={14}
               maxLength={14}
-              className="form-input" 
+              className="form-input"
               placeholder={t('phNationalId')}
             />
           </div>
           <div className="form-group">
             <label className="form-label">{t('lblPhone')}</label>
-            <input 
+            <input
               required
               name="phone"
               value={formData.phone}
               onChange={handleFamilyChange}
               minLength={11}
               maxLength={11}
-              className="form-input" 
-              placeholder={t('phPhone')} 
+              className="form-input"
+              placeholder={t('phPhone')}
             />
           </div>
           <div className="form-group">
             <label className="form-label">{t('lblIncome')}</label>
-            <input 
+            <input
               required
               type="number"
               name="income"
               value={formData.income}
               onChange={handleFamilyChange}
-              className="form-input" 
-              placeholder="0.00" 
+              className="form-input"
+              placeholder="0.00"
             />
           </div>
         </div>
         <div className="form-group">
           <label className="form-label">{t('lblAddress')}</label>
-          <input 
+          <input
             required
             name="address"
             value={formData.address}
             onChange={handleFamilyChange}
-            className="form-input" 
-            placeholder={t('phAddress')} 
+            className="form-input"
+            placeholder={t('phAddress')}
           />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginTop: '1.5rem' }}>
           <div className="form-group">
             <label className="form-label">{t('memberJob')}</label>
-            <input 
+            <input
               name="job"
               value={formData.job}
               onChange={handleFamilyChange}
-              className="form-input" 
-              placeholder={t('phJob')} 
+              className="form-input"
+              placeholder={t('phJob')}
             />
           </div>
           <div className="form-group">
             <label className="form-label">{t('memberStatus')}</label>
-            <select 
+            <select
               name="socialStatus"
               value={formData.socialStatus}
               onChange={handleFamilyChange}
@@ -241,14 +242,14 @@ export default function FamilyRegistration() {
         </div>
 
         {formData.job && formData.job.toLowerCase().includes('student') && (
-           <div className="form-group" style={{ marginTop: '1.5rem' }}>
+          <div className="form-group" style={{ marginTop: '1.5rem' }}>
             <label className="form-label">{t('memberEducation')}</label>
-            <input 
+            <input
               name="educationLevel"
               value={formData.educationLevel}
               onChange={handleFamilyChange}
-              className="form-input" 
-              placeholder={t('phEducation')} 
+              className="form-input"
+              placeholder={t('phEducation')}
             />
           </div>
         )}
@@ -256,7 +257,7 @@ export default function FamilyRegistration() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', marginTop: '1.5rem' }}>
           <div className="form-group">
             <label className="form-label">{t('memberSize')}</label>
-            <select 
+            <select
               name="clothingSize"
               value={formData.clothingSize}
               onChange={handleFamilyChange}
@@ -273,12 +274,12 @@ export default function FamilyRegistration() {
           </div>
           <div className="form-group">
             <label className="form-label">{t('memberSizeDetails')}</label>
-            <input 
+            <input
               name="clothingDetails"
               value={formData.clothingDetails}
               onChange={handleFamilyChange}
-              className="form-input" 
-              placeholder={t('phClothingDetails')} 
+              className="form-input"
+              placeholder={t('phClothingDetails')}
             />
           </div>
         </div>
@@ -288,12 +289,12 @@ export default function FamilyRegistration() {
         <h3>{t('cardFamilies')}</h3>
         <div className="form-group" style={{ maxWidth: '200px' }}>
           <label className="form-label">{t('lblMembersCount')}</label>
-          <input 
-            type="number" 
-            min="1" 
-            value={memberCount} 
+          <input
+            type="number"
+            min="1"
+            value={memberCount}
             onChange={handleMemberCountChange}
-            className="form-input" 
+            className="form-input"
           />
         </div>
 
@@ -304,30 +305,30 @@ export default function FamilyRegistration() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1rem' }}>
                 <div>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberName')}</label>
-                  <input 
+                  <input
                     required
                     value={member.name}
                     onChange={(e) => handleMemberChange(index, 'name', e.target.value)}
-                    className="form-input" 
+                    className="form-input"
                     placeholder={t('phMemberName')}
                   />
                 </div>
                 <div>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('lblNationalId')}</label>
-                  <input 
+                  <input
                     value={member.nationalId}
                     onChange={(e) => handleMemberChange(index, 'nationalId', e.target.value)}
-                    className="form-input" 
+                    className="form-input"
                     placeholder={t('phNationalIdOpt')}
                     maxLength={14}
                   />
                 </div>
-                 <div>
+                <div>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('lblPhone')}</label>
-                  <input 
+                  <input
                     value={member.phone}
                     onChange={(e) => handleMemberChange(index, 'phone', e.target.value)}
-                    className="form-input" 
+                    className="form-input"
                     placeholder={t('phPhoneOpt')}
                     maxLength={11}
                   />
@@ -336,26 +337,26 @@ export default function FamilyRegistration() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
                 <div style={{ gridColumn: 'span 2' }}>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('lblAddress')}</label>
-                  <input 
+                  <input
                     value={member.address}
                     onChange={(e) => handleMemberChange(index, 'address', e.target.value)}
-                    className="form-input" 
+                    className="form-input"
                     placeholder={t('phAddressOpt')}
                   />
                 </div>
                 <div>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('lblIncome')}</label>
-                  <input 
+                  <input
                     type="number"
                     value={member.income}
                     onChange={(e) => handleMemberChange(index, 'income', e.target.value)}
-                    className="form-input" 
-                    placeholder="0.00" 
+                    className="form-input"
+                    placeholder="0.00"
                   />
                 </div>
                 <div>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberSize')}</label>
-                  <select 
+                  <select
                     value={member.clothingSize}
                     onChange={(e) => handleMemberChange(index, 'clothingSize', e.target.value)}
                     className="form-input"
@@ -372,24 +373,24 @@ export default function FamilyRegistration() {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginTop: '1rem' }}>
                 <div>
-                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberRole')}</label>
-                   <select 
-                     value={member.role}
-                     onChange={(e) => handleMemberChange(index, 'role', e.target.value)}
-                     className="form-input"
-                     style={{ width: '100%' }}
-                   >
-                     <option value="Father">{t('roleFather')}</option>
-                     <option value="Mother">{t('roleMother')}</option>
-                     <option value="Son">{t('roleSon')}</option>
-                     <option value="Daughter">{t('roleDaughter')}</option>
-                     <option value="Grandparent">{t('roleGrandparent')}</option>
-                     <option value="Other">{t('roleOther')}</option>
-                   </select>
+                  <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberRole')}</label>
+                  <select
+                    value={member.role}
+                    onChange={(e) => handleMemberChange(index, 'role', e.target.value)}
+                    className="form-input"
+                    style={{ width: '100%' }}
+                  >
+                    <option value="Father">{t('roleFather')}</option>
+                    <option value="Mother">{t('roleMother')}</option>
+                    <option value="Son">{t('roleSon')}</option>
+                    <option value="Daughter">{t('roleDaughter')}</option>
+                    <option value="Grandparent">{t('roleGrandparent')}</option>
+                    <option value="Other">{t('roleOther')}</option>
+                  </select>
                 </div>
                 <div>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberStatus')}</label>
-                  <select 
+                  <select
                     value={member.socialStatus}
                     onChange={(e) => handleMemberChange(index, 'socialStatus', e.target.value)}
                     className="form-input"
@@ -403,35 +404,35 @@ export default function FamilyRegistration() {
                 </div>
                 <div style={{ gridColumn: 'span 2' }}>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberJob')}</label>
-                  <input 
+                  <input
                     value={member.job}
                     onChange={(e) => handleMemberChange(index, 'job', e.target.value)}
-                    className="form-input" 
-                    placeholder={t('phJob')} 
+                    className="form-input"
+                    placeholder={t('phJob')}
                   />
                 </div>
               </div>
 
-               {member.job && member.job.toLowerCase().includes('طالب') && (
+              {member.job && member.job.toLowerCase().includes('طالب') && (
                 <div style={{ marginTop: '1rem' }}>
                   <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberEducation')}</label>
-                  <input 
+                  <input
                     value={member.educationLevel}
                     onChange={(e) => handleMemberChange(index, 'educationLevel', e.target.value)}
-                    className="form-input" 
-                    placeholder={t('phEducation')} 
+                    className="form-input"
+                    placeholder={t('phEducation')}
                   />
                 </div>
               )}
 
               <div style={{ marginTop: '1rem' }}>
-                  <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberSizeDetails')}</label>
-                  <input 
-                    value={member.clothingDetails}
-                    onChange={(e) => handleMemberChange(index, 'clothingDetails', e.target.value)}
-                    className="form-input" 
-                    placeholder={t('phClothingDetails')} 
-                  />
+                <label className="form-label" style={{ fontSize: '0.85rem' }}>{t('memberSizeDetails')}</label>
+                <input
+                  value={member.clothingDetails}
+                  onChange={(e) => handleMemberChange(index, 'clothingDetails', e.target.value)}
+                  className="form-input"
+                  placeholder={t('phClothingDetails')}
+                />
               </div>
             </div>
           ))}

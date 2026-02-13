@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Gift, User, Users } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 export default function AidManagement() {
   const { t } = useLanguage();
@@ -21,7 +22,7 @@ export default function AidManagement() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch('/api/families', {
+    fetch(`${API_URL}/api/families`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -57,7 +58,7 @@ export default function AidManagement() {
     };
 
     try {
-      const url = aidToEdit ? `/api/aid/${aidToEdit.id}` : '/api/aid';
+      const url = aidToEdit ? `${API_URL}/api/aid/${aidToEdit.id}` : `${API_URL}/api/aid`;
       const method = aidToEdit ? 'PUT' : 'POST';
 
       const res = await fetch(url, {

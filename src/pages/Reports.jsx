@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { calculateAge } from '../utils/nationalId';
 import { useLanguage } from '../contexts/LanguageContext';
-import { buildApiUrl } from '../config/api';
+import { API_URL } from '../config/api';
 
 export default function Reports() {
   const { t } = useLanguage();
@@ -14,7 +14,7 @@ export default function Reports() {
 
   useEffect(() => {
     if (visibleTab === 'CLOTHING') {
-      fetch('/api/reports/clothing', {
+      fetch(`${API_URL}/api/reports/clothing`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -33,7 +33,7 @@ export default function Reports() {
           setClothingReport([]);
         });
     } else if (visibleTab === 'FAMILY_AIDS') {
-      fetch('/api/reports/family-aids', {
+      fetch(`${API_URL}/api/reports/family-aids`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -157,7 +157,7 @@ export default function Reports() {
             // We can just trigger the fetch if empty or rely on the user having visited FAMILY_AIDS?
             // Better to duplicate the fetch trigger logic or consolidate
             if (familyAidsReport.length === 0) {
-              fetch('/api/reports/family-aids', {
+              fetch(`${API_URL}/api/reports/family-aids`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
               })
                 .then(res => res.json())
@@ -498,7 +498,7 @@ function AidHistoryTable({ t }) {
       if (endDate) params.append('endDate', endDate);
     }
 
-    fetch(`/api/aid?${params.toString()}`, {
+    fetch(`${API_URL}/api/aid?${params.toString()}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -523,7 +523,7 @@ function AidHistoryTable({ t }) {
   const handleDelete = async (id) => {
     if (!window.confirm(t('confirmDelete') || 'Are you sure?')) return;
     try {
-      const res = await fetch(`/api/aid/${id}`, {
+      const res = await fetch(`${API_URL}/api/aid/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -546,7 +546,7 @@ function AidHistoryTable({ t }) {
       if (startDate) params.append('startDate', startDate);
       if (endDate) params.append('endDate', endDate);
 
-      const res = await fetch(`/api/aid?${params.toString()}`, {
+      const res = await fetch(`${API_URL}/api/aid?${params.toString()}`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
       const result = await res.json();
