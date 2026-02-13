@@ -9,7 +9,6 @@ import { useLanguage } from './contexts/LanguageContext'
 import { useAuth } from './contexts/AuthContext'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import { AuthProvider } from './contexts/AuthContext'
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();

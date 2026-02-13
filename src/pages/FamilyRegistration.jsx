@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Save } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Save } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config/api';
