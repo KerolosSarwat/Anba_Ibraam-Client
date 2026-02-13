@@ -3,39 +3,54 @@
     "version": "1.0.0",
     "description": "Frontend React application for CharityHelper - Family Aid Management System",
     "private": true,
-    "type": "module",
     "author": "Your Name",
     "license": "MIT",
     "engines": {
-        "node": "24.x",
+        "node": ">=18.0.0",
         "npm": ">=8.0.0"
     },
     "scripts": {
-        "dev": "vite --host",
-        "build": "vite build",
-        "preview": "vite preview --host",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
         "lint:fix": "eslint . --ext js,jsx --fix"
     },
-    "build": {
-        "outputDirectory": "dist"
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     },
     "dependencies": {
         "lucide-react": "^0.344.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.22.0",
+        "react-scripts": "5.0.1",
         "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@types/react": "^18.2.56",
         "@types/react-dom": "^18.2.19",
-        "@vitejs/plugin-react": "^4.2.1",
+        "ajv-keywords": "^5.1.0",
         "eslint": "^8.56.0",
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "eslint-plugin-react-refresh": "^0.4.5",
-        "vite": "^5.1.4"
+        "react-refresh": "^0.18.0"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
     },
     "keywords": [
         "charity",

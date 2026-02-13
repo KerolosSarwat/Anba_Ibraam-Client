@@ -1,7 +1,7 @@
 // API Configuration
 // This file centralizes the API base URL for all requests
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://anbaibraam-server-production.up.railway.app/';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://anbaibraam-server-production.up.railway.app/';
 
 // Ensure no trailing slash
 export const API_URL = API_BASE_URL.replace(/\/$/, '');

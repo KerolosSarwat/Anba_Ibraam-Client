@@ -13,8 +13,10 @@ import { AuthProvider } from './contexts/AuthContext'
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="glass-card" style={{padding: '2rem', textAlign: 'center'}}>{useLanguage().t('loading') || 'Loading...'}</div>;
-  if (!user) return <div className="glass-card" style={{ padding: '2rem', textAlign: 'center' }}>{useLanguage().t('msgLoginRequired') || 'Please Login to view this page.'} <a href="/login" style={{color: 'var(--primary)'}}>{useLanguage().t('btnLogin')}</a></div>;
+  const { t } = useLanguage();
+
+  if (loading) return <div className="glass-card" style={{ padding: '2rem', textAlign: 'center' }}>{t('loading') || 'Loading...'}</div>;
+  if (!user) return <div className="glass-card" style={{ padding: '2rem', textAlign: 'center' }}>{t('msgLoginRequired') || 'Please Login to view this page.'} <a href="/login" style={{ color: 'var(--primary)' }}>{t('btnLogin')}</a></div>;
   return children;
 };
 
@@ -55,7 +57,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
+
         <Route element={<Layout />}>
           <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/families" element={<ProtectedRoute><FamilyList /></ProtectedRoute>} />
