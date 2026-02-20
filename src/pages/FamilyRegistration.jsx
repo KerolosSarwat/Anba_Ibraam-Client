@@ -372,7 +372,12 @@ export default function FamilyRegistration() {
                     <option>M</option>
                     <option>L</option>
                     <option>XL</option>
-                    <option>XXL</option>
+                    <option>2XL</option>
+                    <option>3XL</option>
+                    <option>4XL</option>
+                    <option>5XL</option>
+                    <option>6XL</option>
+                    <option>7XL</option>
                   </select>
                 </div>
               </div>
